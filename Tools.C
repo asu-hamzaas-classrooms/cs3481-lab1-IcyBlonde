@@ -105,7 +105,15 @@ uint64_t Tools::getByte(uint64_t source, int32_t byteNum)
  */
 uint64_t Tools::getBits(uint64_t source, int32_t low, int32_t high)
 {
-  return 0;
+  if (low < 0 || high > 63 || low > high)
+  {
+    return 0;
+  }
+  source = source >> low;
+  int rightShift = (63 + low) - high;
+  source = source << rightShift;
+  source = source >> rightShift;
+  return source;
 }
 
 
