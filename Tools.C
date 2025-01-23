@@ -44,8 +44,7 @@
 uint64_t Tools::buildLong(uint8_t bytes[LONGSIZE])
 {
   long totalLong = 0;
-  for (int i = 7; i >= 0; i--)
-  {
+  for (int i = 7; i >= 0; i--){
     totalLong = (totalLong << 8) + bytes[i];
   }
   return totalLong;
@@ -72,7 +71,11 @@ uint64_t Tools::buildLong(uint8_t bytes[LONGSIZE])
 */
 uint64_t Tools::getByte(uint64_t source, int32_t byteNum)
 {
-  return 0;
+  if (byteNum > 7 || byteNum < 0){
+    return 0;
+  }
+  source = (source >> (byteNum * 8)) & 0xFF;
+  return source;
 }
 
 /**

@@ -9,23 +9,18 @@ static int doExit = 0;
 
 //assert is a builtin macro.
 //This is our own version of assert which provides more info.
-#define myAssert(tst, res) \
-   ({ \
-      bool result = (tst == res); \
-      if (!result) { \
-         if (doVerbose || doExit) \
-         { \
-            std::cout << __func__ << ": failed on line " << std::dec << __LINE__ << " in " << __FILE__; \
-            std::cout << ", Expected " << std::hex << res << ", Got " << std::hex << tst << "\n"; \
-         } \
-         if (doExit) \
-         { \
-            std::cout << "Aborting after first failed test\n"; \
-            exit(1); \
-         } \
-      } \
-      result; \
-   })
+int myAssert(uint64_t actual, uint64_t expected) {
+    // Print the result of the comparison
+    if (actual == expected) {
+        std::cout << "Test Passed: 0x" << std::hex << std::uppercase 
+                  << actual << " == 0x" << expected << std::endl;
+        return 1;  // Return 1 for pass
+    } else {
+        std::cout << "Test Failed: 0x" << std::hex << std::uppercase 
+                  << actual << " != 0x" << expected << std::endl;
+        return 0;  // Return 0 for fail
+    }
+}
 
 
 /* static makes these local to this file */
