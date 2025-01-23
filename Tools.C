@@ -43,7 +43,12 @@
 */
 uint64_t Tools::buildLong(uint8_t bytes[LONGSIZE])
 {
-  return 0;
+  long totalLong = 0;
+  for (int i = 7; i >= 0; i--)
+  {
+    totalLong = (totalLong << 8) + bytes[i];
+  }
+  return totalLong;
 }
 
 /** 

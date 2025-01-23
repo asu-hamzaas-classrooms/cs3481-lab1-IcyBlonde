@@ -223,6 +223,10 @@ int buildLongTests()
 
    uint8_t bytes7[LONGSIZE] = {0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00};
    pass &= myAssert(Tools::buildLong(bytes7), 0x00000000ffffffff); 
+
+   uint8_t testBytes[8] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88};
+uint64_t result = Tools::buildLong(testBytes);
+printf("Result: %016lx\n", result);
    
    return pass;
 }
