@@ -173,7 +173,13 @@ uint64_t Tools::setBits(uint64_t source, int32_t low, int32_t high)
  */
 uint64_t Tools::clearBits(uint64_t source, int32_t low, int32_t high)
 {
-  return 0;
+  if (low < 0 || high > 63 || low > high) {
+    return source;
+  }
+
+  long mask = ((1ULL << (high - low + 1)) - 1) << low;
+  mask = ~mask;
+  return source & mask;
 }
 
 
