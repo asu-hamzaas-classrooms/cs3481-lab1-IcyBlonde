@@ -211,15 +211,14 @@ uint64_t Tools::copyBits(uint64_t source, uint64_t dest,
                          int32_t srclow, int32_t dstlow, int32_t length)
 {
   if (srclow < 0 || dstlow < 0 || length <= 0 || srclow + length > 64 || dstlow + length > 64){
-      return dest;
+    return dest;
     }
 
   long src_bits = getBits(source, srclow, srclow + length - 1);
 
   dest = clearBits(dest, dstlow, dstlow + length - 1);
-  dest = setBits(dest, dstlow, dstlow + length - 1);
-  dest = dest | (src_bits << dstlow);
-
+  src_bits = src_bits << dstlow;
+  dest = dest | src_bits;
   return dest;  
 }
 
@@ -297,12 +296,11 @@ uint64_t Tools::sign(uint64_t source)
  */
 bool Tools::addOverflow(uint64_t op1, uint64_t op2)
 {
-  //Hint: If an overflow occurs then it overflows by just one bit.
-  //      In other words, 65 bits would be needed to store the arithmetic 
-  //      result instead of 64 and the sign bit in the stored result (bit 63) is incorrect. 
-  //      Thus, the way to check for an overflow is to compare the signs of the
-  //      operand and the result.  For example, if you add two positive numbers, 
-  //      the result should be positive, otherwise an overflow occurred.
+  long result = op1 + op2;
+
+  if (sign(op1) == sign(op2) && sign(op1) != sign(result)){
+    return true;
+  }
   return false;
 }
 
@@ -328,9 +326,10 @@ bool Tools::addOverflow(uint64_t op1, uint64_t op2)
  */
 bool Tools::subOverflow(uint64_t op1, uint64_t op2)
 {
-  //See hint for addOverflow
-  //Note: you can not simply use addOverflow in this function.  If you negate
-  //op1 in order to an add, you may get an overflow. 
-  //NOTE: the subtraction is op2 - op1 (not op1 - op2).
-  return false;
+    long result = op2 - op1;
+
+    if(sign(op2) != sign(op1) && sign(op2) != sign(result)){
+      return true;
+    }
+    return false;
 }
