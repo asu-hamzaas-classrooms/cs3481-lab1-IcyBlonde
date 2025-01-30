@@ -250,7 +250,7 @@ uint64_t Tools::setByte(uint64_t source, int32_t byteNum)
   if (byteNum >= 0 && byteNum <= 7) {
     mask = ((1ULL << 8) - 1) << (byteNum * 8);
   }
-  
+
   return source | mask;
 }
 
@@ -273,7 +273,7 @@ uint64_t Tools::setByte(uint64_t source, int32_t byteNum)
  */
 uint64_t Tools::sign(uint64_t source)
 {
-  return 0;
+  return (source >> 63) & 1;
 }
 
 /**
